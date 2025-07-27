@@ -1,5 +1,5 @@
-from manimlib import *
-from manimlib.mobject.svg.old_tex_mobject import *
+from manimgl.manimlib import *
+from manimgl.manimlib.mobject.svg.old_tex_mobject import *
 
 from custom.backdrops import *
 from custom.banner import *
