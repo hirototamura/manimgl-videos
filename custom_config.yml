@@ -1,7 +1,7 @@
 directories:
   mirror_module_path: True
   removed_mirror_prefix: "/Users/hiroto/dev/manimglations/manimglvideos/"
-  base: "/Users/hiroto/OneDrive/test/"
+  base: "/Users/hiroto/OneDrive/1D_Manim/"
   subdirs:
     raster_images: "images/raster"
     vector_images: "images/vector"
