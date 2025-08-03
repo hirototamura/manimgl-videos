@@ -1,6 +1,6 @@
 directories:
   mirror_module_path: True
-  removed_mirror_prefix: "/Users/hiroto/dev/manimglations/manimgl-videos/"
+  removed_mirror_prefix: "/Users/hiroto/dev/manimglations/manimglvideos/"
   base: "/Users/hiroto/OneDrive/test/"
   subdirs:
     raster_images: "images/raster"
