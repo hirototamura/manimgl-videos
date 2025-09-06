@@ -822,7 +822,7 @@ class MeasuringNearbyStars(InteractiveScene):
         # Add the stars
         n_stars = 10000
         n_shown_stars = 1000
-        data_file = '/Users/grant/3Blue1Brown Dropbox/3Blue1Brown/videos/2025/cosmic_distance/Data/HYG_Data.gz'
+        data_file = '/Users/hiroto/OneDrive/1D_Manim/videos/2025/cosmic_distance/Data/hygdata_v41.csv.gz'
         full_stellar_data, df = self.read_hyg_data(data_file)
 
         random.shuffle(full_stellar_data)

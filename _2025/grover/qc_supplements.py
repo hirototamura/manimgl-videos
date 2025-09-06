@@ -1,5 +1,5 @@
 from manim_imports_ext import *
-from _2025.blocks_and_grover.state_vectors import *
+from _2025.grover.state_vectors import *
 
 
 def get_quantum_computer_symbol(height=2, color=GREY_B, symbol_tex=R"|Q\rangle", symbol_color=TEAL):

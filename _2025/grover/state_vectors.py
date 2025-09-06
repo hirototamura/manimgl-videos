@@ -1,5 +1,5 @@
 from manim_imports_ext import *
-from _2025.blocks_and_grover.qc_supplements import *
+from _2025.grover.qc_supplements import *
 
 
 class BitString(VGroup):
