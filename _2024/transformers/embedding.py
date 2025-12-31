@@ -106,9 +106,9 @@ def get_direction_lines(axes, direction, n_lines=500, color=YELLOW, line_length=
     lines.set_color(color)
     for line in lines:
         line.move_to(axes.c2p(
-            random.uniform(*axes.x_range),
-            random.uniform(*axes.y_range),
-            random.uniform(*axes.z_range),
+            random.uniform(*axes.x_range[:2]),
+            random.uniform(*axes.y_range[:2]),
+            random.uniform(*axes.z_range[:2]),
         ))
     return lines
 
@@ -2581,7 +2581,7 @@ class SimpleSpaceExample(InteractiveScene):
         vect.set_color(BLUE)
         vect.always.set_perpendicular_to_camera(self.frame)
         label = Text("you", font_size=24)
-        # label = Text("bank", font_size=24).set_backstroke(BLACK, 5)
+        # label = Text("Photo", font_size=24).set_backstroke(BLACK, 5)
         label.rotate(PI / 2, RIGHT)
         label.next_to(vect.get_center(), OUT + LEFT, buff=0)
 
@@ -2623,9 +2623,14 @@ class SimpleSpaceExample(InteractiveScene):
 
         # Specific ideas added onto "you"
         ideas = VGroup(
+            # Text("Astronaut"),
+            # Text("Riding a Horse"),
+            # Text("On the moon"),
+            #
             Text("needs an adjective next"),
             Text("preceded by \"that which does not kill\""),
             Text("related to growth and strength"),
+            #
             # Text("River bank"),
             # Text("Beginning of a story"),
             # Text("Establishing a setting"),
