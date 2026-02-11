@@ -1886,6 +1886,7 @@ class SphereStrips(InteractiveScene):
         cylinder_mesh.set_clip_plane(UP, 20)
         cylinder_mesh.match_height(sphere)
 
+        self.play(self.frame.animate.reorient(26, 69, 0, (-0.0, -0.0, 0.0), 3.00), run_time=3)
         self.play(ShowCreation(cylinder_mesh, lag_ratio=0.01))
         self.wait()
 

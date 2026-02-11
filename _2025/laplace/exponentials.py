@@ -960,7 +960,7 @@ class SPlane(InteractiveScene):
         output_label = Tex(Rf"e^{{{s_tex} \cdot 0.00}}", font_size=36, t2c=self.tex_to_color_map)
         t_label = output_label.make_number_changeable("0.00")
         t_label.set_color(BLUE)
-        s_term = output_label["s"][0][0]
+        s_term = output_label[s_tex][0][0]
         t_label.set_height(s_term.get_height() * 1.2, about_edge=LEFT)
         t_label.f_always.set_value(get_t)
         t_label.always.match_y(s_term, DOWN)
@@ -1403,7 +1403,7 @@ class BreakingDownFunctions(ForcedOscillatorSolutionForm):
 
         self.add(graph)
 
-        self.wait(20)
+        self.wait(30)
         self.play(VFadeOut(graph), VFadeOut(all_vects))
         exp_diagrams.suspend_updating()
 
@@ -1797,7 +1797,8 @@ class DefineSPlane(SPlane):
         # Add exp plane
         exp_plane = self.get_exp_plane()
         exp_plane_label = self.get_exp_plane_label(exp_plane)
-        output_dot, output_label = self.get_output_dot_and_label(exp_plane, get_s, get_t)
+        # output_dot, output_label = self.get_output_dot_and_label(exp_plane, get_s, get_t)
+        output_dot, output_label = self.get_output_dot_and_label(exp_plane, get_s, get_t, s_tex="a")
         output_path = self.get_output_path(exp_plane, get_t, get_s)
         output_path.set_clip_plane(RIGHT, -s_plane.get_x(RIGHT))
 
@@ -1822,6 +1823,14 @@ class DefineSPlane(SPlane):
         axes_background.stretch(1.2, 1, about_edge=DOWN)
 
         self.add(axes_background, axes, graph, v_line)
+
+        # Test
+        s_tracker.set_value(-0.1 + 1.5j)
+        t_tracker.clear_updaters()
+        t_tracker.set_value(0)
+        t_tracker.add_updater(lambda m, dt: m.increment_value(dt))
+        self.add(t_tracker)
+        self.wait(20)
 
         # Go!
         t_tracker.clear_updaters()

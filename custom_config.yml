@@ -5,6 +5,7 @@ directories:
   subdirs:
     raster_images: "images/raster"
     vector_images: "images/vector"
+    three_d_models: "images/models"
     pi_creature_images: "images/pi_creature/svg"
     downloads: "manim_downloads"
     # Use the default value for the rest

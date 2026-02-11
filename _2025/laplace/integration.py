@@ -1407,6 +1407,8 @@ class BreakDownLaplaceTransform(IntegrateComplexExponential):
     s_plane_x_range = (-3, 3)
     s_label_font_size = 24
     t_max = 100  # For dynamic path and vector sum.  Change to 100 for final render
+    # pole_value = 1.5
+    pole_value = -0.2 + 1.5j
 
     def construct(self):
         self.add_core_pieces()
@@ -1570,7 +1572,7 @@ class BreakDownLaplaceTransform(IntegrateComplexExponential):
         return self.func(t) * np.exp(-self.s_tracker.get_value() * t)
 
     def transformed_func(self, s):
-        return np.divide(1.0, (s - 1.5))
+        return np.divide(1.0, (s - self.pole_value))
 
     def draw_upper_plot(self, draw_time=12, rate_multiple=2):
         exp_plane = self.output_planes[0]
@@ -1602,6 +1604,27 @@ class BreakDownLaplaceTransform(IntegrateComplexExponential):
         self.remove(path_copy, tracing_vect)
         self.add(self.output_path, self.vect_sum, self.integral_vect)
         self.wait()
+
+    def show_simple_pole(self):
+        # Clean the board
+        frame = self.frame
+        for line in self.graph[1]:
+            if line.get_z(OUT) > 100 or line.get_z(IN) < -100:
+                line.set_stroke(opacity=0)
+        self.clear()
+        self.add(self.s_group, self.graph, self.graph_tracer)
+        self.graph_tracer[0].set_stroke(width=1)
+
+        # Move
+        frame.reorient(-30, 83, 0, (-4.35, 1.2, 2.52), 11.47)
+        self.play(
+            frame.animate.reorient(0, 0, 0, (-5.17, -0.19, 0.0), 9.88).set_field_of_view(20 * DEG),
+            self.s_tracker.animate.set_value(self.pole_value + 1e-5),
+            run_time=10
+        )
+        self.wait()
+
+
 
 
 class LaplaceTransformOfCos(BreakDownLaplaceTransform):
@@ -1806,3 +1829,15 @@ class LaplaceTransformOfCos(BreakDownLaplaceTransform):
 
     def transformed_func(self, s):
         return np.divide(s, s**2 + 1**2)
+
+
+class SimplePole(InteractiveScene):
+    def construct(self):
+        frame = self.frame
+        plane = ComplexPlane((-3, 3), (-3, 3))
+        a = complex(-0.5 + 1.5j)
+        graph = get_complex_graph(plane, lambda s: np.divide(1.0, (s - a)))
+
+        self.add(plane, graph)
+        frame.reorient(-22, 89, 0, (0.31, 0.85, 3.73), 12.49)
+        self.play(frame.animate.reorient(23, 88, 0, (0.31, 0.85, 3.73), 12.49), run_time=10)

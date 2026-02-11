@@ -216,19 +216,12 @@ class SideScrollEndScreen(PatreonEndScreen):
     patron_scale_val = 0.5
     n_patron_columns = 2
     max_patron_width = 2
-    thanks_text = "Special Thanks"
-    thanks_subtext = """
-        Enjoy the lack of sponsor promos?
-        3b1b is instead funded directly by viewers.
-    """
+    thanks_text = "Special Thanks to\nthese channel supporters"
     thanks_style = dict(
         fill_color=YELLOW,
-        font_size=48,
+        font_size=36,
     )
-    thanks_subtext_style = dict(
-        fill_color=GREY_A,
-        font_size=28,
-    )
+    thanks_panel_margin = 0.25
     early_view_text = """
         Hey, psst, channel
         supporters get early
@@ -332,15 +325,11 @@ class SideScrollEndScreen(PatreonEndScreen):
         v_line.move_to(self.panels[1].get_left())
         v_line.set_stroke(self.line_color, 1)
 
-        thanks = VGroup(
-            Text(self.thanks_text, **self.thanks_style),
-            Text(self.thanks_subtext, **self.thanks_subtext_style),
-        )
-        thanks.arrange(DOWN)
+        thanks = Text(self.thanks_text, **self.thanks_style)
         thanks_panel = self.panels[0].copy()
         thanks_panel.set_fill(BLACK, 1)
         thanks_panel.set_height(
-            thanks.get_height() + 0.8,
+            thanks.get_height() + 2 * self.thanks_panel_margin,
             stretch=True,
             about_edge=UP,
         )

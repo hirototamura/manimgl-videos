@@ -316,7 +316,6 @@ class Mathematician(PiCreature):
         super().__init__(mode, color, **kwargs)
 
 
-
 class BabyPiCreature(PiCreature):
     def __init__(
         self,

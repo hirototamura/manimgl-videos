@@ -1,48 +1,4 @@
-from manimlib import *
-import numpy as np
-
-
-def fibonacci_sphere(samples=1000):
-    """
-    Create uniform-ish points on a sphere
-
-    Parameters
-    ----------
-    samples : int
-        Number of points to create. The default is 1000.
-
-    Returns
-    -------
-    points : NumPy array
-        Points on the unit sphere.
-
-    """
-
-    # Define the golden angle
-    phi = np.pi * (np.sqrt(5)-1)
-
-    # Define y-values of points
-    pos = np.array(range(samples),ndmin=2)
-    y = 1 - (pos/(samples - 1)) * 2
-
-    # Define radius of cross-section at y
-    radius = np.sqrt(1-y*y)
-
-    # Define the golden angle increment
-    theta = phi * pos
-
-    # Define x- and z- values of poitns
-    x = np.cos(theta)*radius
-    z = np.sin(theta)*radius
-
-    # Merge together x,y,z
-    points = np.concatenate((x,y,z))
-
-    # Transpose to get coordinates in right place
-    points = np.transpose(points)
-
-    return points
-
+from manim_imports_ext import *
 
 def sanitize_3D_vector(pt):
     """
@@ -164,7 +120,7 @@ def direction_field(pt, discontinuities="equator", epsilon=0.01):
     return vec
 
 
-def distension(pt,t):
+def distension(pt, t):
     """
     Helper function for computing amount to distend homotopy.
 
@@ -256,7 +212,7 @@ def great_circle_map(pt, t, discontinuities="one", distend=0, epsilon=0.01):
 
 ### TEST FUNCTIONS
 
-def test_direction_field(num_pts=1000,epsilon=0.001):
+def test_direction_field(num_pts=1000, epsilon=0.001):
     """
     Function to test correctness of direction_field
 
@@ -293,7 +249,7 @@ def test_direction_field(num_pts=1000,epsilon=0.001):
         print(f"{key}: {value} points")
 
     print("")
-    print("Count completed.")        
+    print("Count completed.")
     return None
 
 
@@ -459,39 +415,3 @@ def spherical_eversion(theta, phi, t):
     pt = spherical_surface(theta, phi)
     new_pt = great_circle_map(pt, t, discontinuities="one", distend=0.5)
     return new_pt[0][0][0]
-
-
-class SurfaceTestForSenia(InteractiveScene):
-    def construct(self):
-        # Test
-        axes = ThreeDAxes()
-
-        time_tracker = ValueTracker(0)
-
-        def get_surface(t):
-            return ParametricSurface(
-                lambda u, v: spherical_eversion(u, v, t),
-                u_range=(0, 2 * PI),
-                v_range=(0.1, PI),
-                resolution=(25, 25),
-            )
-
-        def update_surface(surface):
-            surface.match_points(get_surface(time_tracker.get_value()))
-
-        surface = TexturedSurface(get_surface(0), "Tower2")
-
-        self.frame.reorient(-3, 60, 0, (-0.02, 0.05, 0.09), 4.26)  # Use shift-D to copy frame state
-        self.add(axes)
-        self.add(surface)
-        self.play(
-            time_tracker.animate.set_value(1).set_anim_args(rate_func=linear),
-            UpdateFromFunc(surface, update_surface),
-            run_time=20,
-        )
-        self.wait()
-
-        self.play(
-            ShowCreation(surface),
-            self.frame.animate.reorient(41, 70, 0, (-0.17, 0.22, 0.06), 5.33)
-        )
